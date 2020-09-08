@@ -2,6 +2,7 @@ import os
 import shutil
 import argparse
 import torch
+import numpy as np
 import torch.nn as nn
 import torchvision.models as models
 from torchvision import transforms, utils
@@ -22,7 +23,7 @@ parser.add_argument('--epochs', default=200, type=int, help='manual epoch number
 parser.add_argument('--lr', default=1e-4, type=float, help='initial learning rate')
 parser.add_argument('--lr-step', default=100, type=float, help='learning rate decay frequency')
 parser.add_argument('--batch-size', default=8, type=int, help='mini-batch size')						
-parser.add_argument('--workers', default=8, type=int, help='number of data loading workers')
+parser.add_argument('--workers', default=0, type=int, help='number of data loading workers')
 args = parser.parse_args()
 
 
@@ -66,6 +67,7 @@ def train(train_loader, model, criterion, optimizer, epoch):
 
 		# compute output
 		output = model(input_var)
+
 		output = output[:, -1, :]
 		loss = criterion(output, target_var)
 		losses.update(loss.item(), 1)

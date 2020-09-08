@@ -70,7 +70,7 @@ class LSTMModel(nn.Module):
 	def forward(self, inputs, hidden=None, steps=0):
 		length = len(inputs)
 		fs = torch.zeros(inputs[0].size(0), length, self.rnn.input_size).cuda()
-
+		
 		for i in range(length):
 			f = self.features(inputs[i])
 			f = f.view(f.size(0), -1)
